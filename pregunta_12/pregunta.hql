@@ -14,11 +14,9 @@ Apache Hive se ejecutará en modo local (sin HDFS).
 
 Escriba el resultado a la carpeta `output` de directorio de trabajo.
 
-/*
-    >>> Escriba su respuesta a partir de este punto <<<
-*/
-INSERT OVERWRITE LOCAL DIRECTORY 'output/'
+/INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+
 SELECT letra, letras, COUNT(letras)
 FROM t0
 LATERAL VIEW
