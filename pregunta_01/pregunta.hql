@@ -12,27 +12,21 @@ Apache Hive se ejecutará en modo local (sin HDFS).
 Escriba el resultado a la carpeta `output` de directorio de trabajo.
 
         >>> Escriba su respuesta a partir de este punto <<<
-DROP TABLE IF EXISTS DATOS;
-CREATE TABLE DATOS (LETRA STRING,
-FECHA STRING,
-NUMERO INT)
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t';  
+*/
 
-LOAD DATA LOCAL INPATH './data.tsv' OVERWRITE INTO TABLE DATOS;
+DROP TABLE IF EXISTS data;
+CREATE TABLE data (letter        STRING,
+                   dates         DATE,
+                   number        INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
 
-CREATE TABLE WORDCOUNT AS 
-SELECT LETRA, COUNT(1) AS  COUNT FROM
-(SELECT EXPLODE (split(LETRA, '\\s')) AS LETRA FROM DATOS) L
-GROUP BY LETRA
-ORDER BY LETRA DESC
-LIMIT 5;
+LOAD DATA LOCAL INPATH "data.tsv" OVERWRITE INTO TABLE data;
 
-CREATE TABLE RESULT AS
-SELECT * FROM WORDCOUNT
-ORDER BY LETRA;
-
-INSERT OVERWRITE DIRECTORY 'output'
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT * FROM RESULT;
-
+SELECT letter, count(letter) AS count
+    FROM data
+GROUP BY
+    letter
+ORDER BY
+    letter;
