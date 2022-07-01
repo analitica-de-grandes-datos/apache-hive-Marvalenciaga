@@ -42,7 +42,10 @@ MAP KEYS TERMINATED BY '#'
 LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 
-/DROP TABLE IF EXISTS Result;
+/*
+    >>> Escriba su respuesta a partir de este punto <<<
+*/
+DROP TABLE IF EXISTS Result;
 CREATE TABLE Result as 
 SELECT c2, c1 FROM tbl0
 ORDER BY c2,c1;
